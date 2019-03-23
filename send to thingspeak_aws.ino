@@ -23,7 +23,7 @@ String date ="";
 
 void setup() {
   Serial.begin(115200);
-  setTime(18,43,0,19,3,19);
+  setTime(18,43,0,19,3,19); //테스트용
   connectWifi();
 }
 
@@ -34,8 +34,8 @@ void loop() {
   temp = DS18B20.getTempCByIndex(0);
 
   //Serial.print(String(sent)+" Temperature: ");
-  digitalClockDisplay();
-  Serial.print(date);
+  digitalClockDisplay(); //테스트용
+  Serial.print(date); //테스트용
  Serial.println(temp);
  
   sendTeperatureTS(temp);
@@ -135,7 +135,7 @@ void sendTeperatureSV(float temp,String date)
 */
 
 
-void digitalClockDisplay(){
+void digitalClockDisplay(){ //아두이노에서 시간 테스트
     date="";
     //Serial.print(year()); 
     date+=String(year());

@@ -44,6 +44,7 @@ void loop() {
   int count = myPeriodic;
  // while(count--)
  // delay(1);
+  //서버 시간차이 줄이는 구문인데 필요x
 }
 
 void connectWifi()

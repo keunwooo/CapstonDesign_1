@@ -11,13 +11,6 @@
 OneWire oneWire(ONE_WIRE_BUS);
 DallasTemperature DS18B20(&oneWire);
 float prevTemp = 0;
-//const char* server = "api.thingspeak.com";
-//const char* server2 = "18.191.228.12";
-//String apiKey ="XLTL6DFFAB7QER25";
-//const char* MY_SSID = "SK_WiFiGIGAEDBC";
-//const char* MY_SSID = "3627";
-//const char* MY_PWD = "1701012482";
-//const char* MY_PWD = "hyeongchan";
 
 const char* server = thingspeak;
 const char* server2 = ubuntus;

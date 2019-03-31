@@ -4,11 +4,18 @@ const fs = require('fs');
 var dateTime = require('node-datetime');
 mysql = require('mysql');
 
+var user = require('./inform');
+
 var connection = mysql.createConnection({
-    host: 'localhost',
-    user: 'me2',
-    password: '',
-    database: 'mytemp'
+
+        host: user.host,
+        user: user.user,
+        password: user.password,
+        database: user.database,
+    //host: 'localhost',
+    //user: 'me2',
+    //password: '',
+    //database: 'mytemp'
 })
 connection.connect();
 
@@ -35,8 +42,6 @@ function insert_sensor(value,time) {
     console.log("database insertion ok= %j", obj);
   });
 }
-
-
 app.get('/log',function(req,res){
 
 
@@ -150,9 +155,12 @@ app.get('/graph', function (req, res) {
             var qstr = 'SELECT * from sensors ORDER BY time';
     connection.query(qstr, function(err, rows, cols) {
       if (err) throw err;
-
+        var flag = 1;
       var data = "";
       var comma = ""
+            var first="";
+            var last="";
+
       for (var i=0; i< rows.length; i++) {
          r = rows[i];
                 //console.log(r.time);
@@ -173,13 +181,23 @@ app.get('/graph', function (req, res) {
         }
 
             //  console.log(hms);
-        data+=comma+"[new Date("+ymd[2]+ymd[0]+","+ymd[1]+","+hms[0]+","+hms[1]+","+hms[2]+"),"+r.value + "]";
+        data+=comma+"[new Date("+ymd[2]+String(Number(ymd[0])-1)+","+ymd[1]+","+hms[0]+","+hms[1]+","+hms[2]+"),"+r.value + "]";
               comma = ",";
+        var shim = ymd[2].split(',');
+              if(flag==1){
+                      flag=0;
+                first=shim[0]+"-"+ymd[0]+"-"+ymd[1]+" "+hms[0]+":"+hms[1]+":"+hms[2] ;
+
+              }
+
       }
+            last=shim[0]+"-"+ymd[0]+"-"+ymd[1]+" "+hms[0]+":"+hms[1]+":"+hms[2] ;
       header = "data.addColumn('date', 'Date/Time');"
       header += "data.addColumn('number', 'Temperature');"
       html = html.replace("<%HEADER%>", header);
       html = html.replace("<%DATA%>", data);
+            html = html.replace("<%first-time%>",first);
+            html = html.replace("<%last-time%>",last);
 
       res.writeHeader(200, {"Content-Type": "text/html"});
       res.write(html);
@@ -197,3 +215,4 @@ var server = app.listen(3000, function () {
 //app.listen(3000, function () {
 //  console.log('Example app listening on port 3000!');
 //})
+         

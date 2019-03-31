@@ -3,6 +3,7 @@
 #include <ESP8266WiFi.h>
 #include <OneWire.h>
 #include <DallasTemperature.h>
+#include "myinfo.h"
 
 #define myPeriodic 15 //in sec | Thingspeak pub is 15sec
 #define ONE_WIRE_BUS 2  // DS18B20 on arduino pin2 corresponds to D4 on physical board
@@ -10,13 +11,20 @@
 OneWire oneWire(ONE_WIRE_BUS);
 DallasTemperature DS18B20(&oneWire);
 float prevTemp = 0;
-const char* server = "api.thingspeak.com";
-const char* server2 = "18.191.228.12";
-String apiKey ="XLTL6DFFAB7QER25";
-const char* MY_SSID = "SK_WiFiGIGAEDBC";
+//const char* server = "api.thingspeak.com";
+//const char* server2 = "18.191.228.12";
+//String apiKey ="XLTL6DFFAB7QER25";
+//const char* MY_SSID = "SK_WiFiGIGAEDBC";
 //const char* MY_SSID = "3627";
-const char* MY_PWD = "1701012482";
+//const char* MY_PWD = "1701012482";
 //const char* MY_PWD = "hyeongchan";
+
+const char* server = thingspeak;
+const char* server2 = ubuntus;
+String apiKey =apikeys;
+const char* MY_SSID = mywifi;
+const char* MY_PWD = mypassword;
+
 int sent = 0;
 String date ="";
 
